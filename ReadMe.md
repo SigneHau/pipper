@@ -1,4 +1,4 @@
-Perfekt 🙌 Her får du en færdig **README.md** som du kan kopiere direkte ind i dit repo:
+
 
 ````markdown
 # Pipper
