@@ -27,4 +27,46 @@ window.onclick = function (event) {
   }
 }
 
+//Fubktion til når pip-beskeden bliver submittet
+document.getElementById("pip-form").addEventListener("submit", (event) => {
+    event.preventDefault() // stopper standard opførslen, hvor browseren reloader siden
+
+    const username = document.getElementById("username").value
+    //const name2 = event.target[0].value; // henter også name
+    const message = document.getElementById("message").value
+    
+    console.log(username, message);
+
+    if (username === "") {
+        alert("Der mangler et navn")
+    }
+    if (message === "") {
+        alert("Der mangler din besked")
+    }
+  
+    if (username !== "" && message !== "") {
+        addPipToDOM(username, message)
+    }
+    //console.log(event.target["username"].value);
+})
+
+function addPipToDOM(username, message) {
+    let pipHtml = document.getElementById("pip"); 
+    //console.log(username, message);
+    
+    
+    // opretter en kopi fordi jeg skal have en templates indhold per student
+    let clon = pipHtml.content.cloneNode(true);
+    // console.log(clon);
+    
+    // console.log(clon.querySelector(".username"));
+    
+    // Sætter jeg den studerendes værdier ind i klonen af templaten
+    clon.querySelector(".username").innerText = username;
+    clon.querySelector(".message").innerText = message;
+    
+
+    // indsætter vi templaten i html dokumentet (så brugeren kan se den)
+    document.getElementById("pips").appendChild(clon);
+}
 

@@ -1,5 +1,3 @@
-//laver javascript til mine pips
-
 //js object
 const pip1 = {
      username: 'Signe',
@@ -50,8 +48,6 @@ pips.forEach((pip) => {
      let pMessage = clon.querySelector(".message");
      let pCreated_ad = clon.querySelector(".created_ad");
 
-
-     
      
      // Billedet fra URL sættes direkte her:
      pAvatar.src = pip.picture;
