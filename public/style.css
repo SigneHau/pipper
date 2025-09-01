@@ -1,0 +1,207 @@
+body {
+    background-color: black;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+p {
+    color: white;
+    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1.4rem;
+}
+
+.container {
+    background-color: black;
+    display: flex;
+    justify-content: center;/* sørger for at centrerede flex-items */
+    gap: 40px;
+    margin: 40px auto;/* auto margin centrerer containeren på siden */
+    max-width: 1400px;/* giver kontrol over maks bredde */
+    
+}
+
+/* Style til sidemenu*/
+.sidemenu {
+    width: 400px;
+    height: 900px;
+    display: flex;
+    flex-direction: column;/* centrerer alle børn horisontalt */
+    gap: 10px;/* afstand mellem elementer */
+}
+
+.img-logo {
+    max-width: 120px;/* eller hvor lille du vil have det */
+    height: auto; /* sørger for at højden følger med */
+}
+
+.icon {
+    color: white;
+    margin: 20px;
+}
+
+.icon-home,
+.icon-profil,
+.icon-search,
+.icon-notifications {
+    display: flex;
+    align-items: center;/* centrerer ikon og tekst lodret */
+    gap: 8px; /* afstand mellem ikon og tekst */
+}
+
+#myBtn {
+    background-color: #a56d39;
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    display: block;
+    margin: auto;/* centrerer horisontalt */
+    color: white;
+    font-size: large;
+    border: 0.1px white solid;
+}
+
+#myBtn:hover {
+    background-color: white;
+    color: black;
+}
+
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    
+    justify-content: center;   /* centrerer vandret */
+    align-items: flex-start;   /* top i stedet for midten */
+    padding-top: 40px;         /* lidt luft fra toppen */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #0e0d0d;
+    padding: 20px;
+    width: 50%;
+    max-width: 600px;
+    border-radius: 20px;
+    border: 1px solid white;
+}
+
+.modal-content form{
+    display: flex; 
+    flex-direction: column; 
+    color: white;
+    height: 300px;
+}
+
+.modal-content label {
+    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    color: white;
+}
+
+#message {
+    width: 97%;
+    padding: 10px;
+    font-size: 1rem;
+    resize: vertical;  /* brugeren kan ændre højden */
+    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+
+
+
+/* Knappen inden i Modal */
+#btnInsideModal{
+    background-color: #a56d39;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    margin: 20px 40px;
+    color: white;
+    font-size: large;
+    border: 0.1px white solid;
+     display: block;
+    margin: auto;  /* centrerer horisontalt */
+}
+
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Style til pips*/
+.pip-container {
+    display: flex;
+    flex-direction: row;/* billede + tekst ved siden af hinanden */
+    align-items: flex-start;/* start linje, så teksten starter øverst */
+    height: 200px;
+   
+    border-radius: 30px;
+    margin: 25px;
+    padding: 20px;
+    border: 1px white solid;
+}
+
+.pip-text {
+    display: flex;
+    flex-direction: column;/* navn øverst, så besked, så dato */
+    justify-content: flex-start;
+}
+
+.avatar {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;/* rund avatar */
+    
+    object-fit: cover; /* sikrer at billedet ikke strækkes */
+}
+
+/* Style til chatfeed*/
+.chatfeed {
+    background-color: rgb(173, 131, 131);
+    width: 800px;
+    padding: 20px;
+    border: 1px solid white;
+    /* tykkelse, stil, farve */
+    border-radius: 10px;
+}
+
+
+
+
+.newsfeed {
+    padding: 20px;
+    width: 400px;
+    /*visibility: hidden; skjuler indholdet, men beholder pladsen */
+}
+
+
+
+
+@media only screen and (max-width: 600px) {
+    .newsfeed {
+        display: none;
+    }
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipper</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- detter er link til ikonerne -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- linker til min javascipt kode -->
+    <script src="script-modal.js" defer> </script>
+    <script src="script-pip.js" defer> </script>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Side menuen i venstre side, hvor logo og icon og menu punkter er listet op - i bunden laves knappen til pip indlæg -->
+
+        <div class="sidemenu">
+            <img class="img-logo" src="img/pipper-logo.png" alt="logo">
+
+            <div class="icon-home">
+                <i class="icon" data-feather="home"></i>
+                <p>Home</p>
+            </div>
+
+            <div class="icon-profil">
+                <i class="icon" data-feather="user"></i>
+                <p>Profile</p>
+            </div>
+
+            <div class="icon-search">
+                <i class="icon" data-feather="search"></i>
+                <p>Search</p>
+            </div>
+
+            <div class="icon-notifications">
+                <i class="icon" data-feather="bell"></i>
+                <p>Notifications</p>
+            </div>
+
+            <!-- Trigger/Open The Modal -->
+            <button id="myBtn">Post my pip</button>
+        </div>
+
+        <!-- opretter er chatfeed - hvor Når knappen “Post my pip” klikkes, bruges JavaScript til at vise en modal (et overlay div) inde i .chatfeed eller som et absolut positioneret element ovenpå siden. Modal skal indeholde: <input> for brugernavn,<textarea> for Pip-besked, og Eventuelt en “Send” eller “Cancel” knap -->
+
+        <div class="chatfeed">
+
+
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Hvad vil du dele?</p>
+                    <form>
+                        <label for="username">Usernavn:</label><br>
+                        <input type="text" id="username" name="username"> <br>
+                        <label for="message">Massage:</label><br>
+                        <textarea id="message" name="message" rows="5" placeholder="Skriv dit pip her..."></textarea>
+                    </form>
+
+                    <button id="btnInsideModal">Pip</button>
+
+                </div>
+
+            </div>
+
+            <!-- The template - til de pips der kommer -->
+
+            <template id="pip">
+                <div class="pip-container">
+                    <img class="avatar" alt="avatar" />
+                    <div class="pip-text">
+                        <p class="username"></p>
+                        <p class="message"></p>
+                        <p class="created_ad"></p>
+                    </div>
+
+                </div>
+            </template>
+
+            <div id="pips">
+
+            </div>
+
+        </div>
+
+
+        <!-- et sted du kan se reklamer for nyheder - evt bare et billede ind fra X -->
+        <div class="newsfeed">
+
+            <img src="img/newsfeed-img.png" alt="">
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>
