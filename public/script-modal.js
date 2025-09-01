@@ -32,7 +32,6 @@ document.getElementById("pip-form").addEventListener("submit", (event) => {
     event.preventDefault() // stopper standard opførslen, hvor browseren reloader siden
 
     const username = document.getElementById("username").value
-    //const name2 = event.target[0].value; // henter også name
     const message = document.getElementById("message").value
     
     console.log(username, message);
@@ -45,9 +44,17 @@ document.getElementById("pip-form").addEventListener("submit", (event) => {
     }
   
     if (username !== "" && message !== "") {
+
         addPipToDOM(username, message)
     }
     //console.log(event.target["username"].value);
+    // Luk modal
+    modal.style.display = "none";
+
+    // Ryd formular felterne
+    document.getElementById("username").value = "";
+    document.getElementById("message").value = "";
+
 })
 
 function addPipToDOM(username, message) {
@@ -55,16 +62,19 @@ function addPipToDOM(username, message) {
     //console.log(username, message);
     
     
-    // opretter en kopi fordi jeg skal have en templates indhold per student
+    // opretter en kopi fordi jeg skal have en templates indhold per pip
     let clon = pipHtml.content.cloneNode(true);
     // console.log(clon);
     
     // console.log(clon.querySelector(".username"));
     
-    // Sætter jeg den studerendes værdier ind i klonen af templaten
+    // Sætter jeg pips værdier ind i klonen af templaten
     clon.querySelector(".username").innerText = username;
     clon.querySelector(".message").innerText = message;
     
+      // Sæt en standard Dicebear avatar
+    clon.querySelector(".avatar").src = "https://api.dicebear.com/9.x/adventurer/svg?seed=" + encodeURIComponent(username);
+
 
     // indsætter vi templaten i html dokumentet (så brugeren kan se den)
     document.getElementById("pips").appendChild(clon);
