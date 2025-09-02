@@ -1,7 +1,7 @@
 <?php
 require '../.env';
 
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: http://127.0.0.1:5500");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 header("Access-Control-Max-Age: 3600");
@@ -38,7 +38,4 @@ if ($request == "GET") {
     // Her håndterer vi POST-request
      echo json_encode(["message" => "Du lavede en POST-request"]);
 }
-
-
-
 ?>

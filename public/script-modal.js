@@ -1,3 +1,9 @@
+// Vi import funktionen getdata fra api.js og laver en funktion så vi får vores beskeder ud
+import { getData } from "./api.js";
+
+const pips = await getData(); // her kalder jeg php serveren gennem funktionen fra api.js filen.
+console.log(pips);
+
 
 // Erstatter alle <i data-feather="..."></i> med SVG-ikoner fra Feather Icons
 feather.replace();
@@ -26,6 +32,7 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 }
+
 
 //Fubktion til når pip-beskeden bliver submittet
 document.getElementById("pip-form").addEventListener("submit", (event) => {
