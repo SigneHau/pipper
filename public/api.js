@@ -9,7 +9,7 @@ export async function getData() {
     }
 
     const result = await response.json();
-    console.log(result);
+    //console.log(result);
     
     return result;
 

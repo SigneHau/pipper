@@ -44,10 +44,10 @@ document.getElementById("pip-form").addEventListener("submit", (event) => {
     console.log(username, message);
 
     if (username === "") {
-        alert("Der mangler et navn")
+        //alert("Der mangler et navn")
     }
     if (message === "") {
-        alert("Der mangler din besked")
+        //alert("Der mangler din besked")
     }
   
     if (username !== "" && message !== "") {
@@ -63,6 +63,25 @@ document.getElementById("pip-form").addEventListener("submit", (event) => {
     document.getElementById("message").value = "";
 
 })
+
+// Der må maksimalt blive indtastet 255 karakterer i Pip-besked feltet, og der skal laves en tæller, så brugeren kan følge med i hvor mange de indtil videre har tastet.
+
+//Hent HTML-elementer og gemmer i en variabel og definer maks-længde
+const messageElement = document.getElementById('message');
+const charCountElement = document.getElementById('charCount');
+const maxLength = 250;
+
+// Opdater tælleren med det samme
+charCountElement.textContent = maxLength;
+
+//Lyt efter input
+messageElement.addEventListener('input', () => {
+ 
+  //Beregn og opdater
+  const remainingChars = maxLength - messageElement.value.length;
+   charCountElement.textContent = remainingChars;
+})
+
 
 function addPipToDOM(username, message) {
     let pipHtml = document.getElementById("pip"); 
