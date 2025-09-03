@@ -39,25 +39,25 @@ $request = $_SERVER['REQUEST_METHOD'];
      else if ($request === 'POST' && $uri === '/pips') {
       $input = (array) json_decode(file_get_contents('php://input'), true);
   
-      $name = $input["name"];
-      $color = $input["color"];
+      $name = $input["username"];
+      $color = $input["message"];
   
       if ($name !== '') { // validering: overholde regler for at gemme korrekt data
           $data = [
-              'name' => $name,
-              'color' => $color
+              'username' => $username,
+              'message' => $message
           ];
-          $sql = "INSERT INTO cats VALUES (default, :name, :color)";
+          $sql = "INSERT INTO pipper VALUES (default, :username, :message)";
           $stmt= $conn->prepare($sql);
           $stmt->execute($data);
   
   
           $id = $conn->lastInsertId();
-          $cat = (object) $input;
-          $cat->id = $id;
+          $pip = (object) $input;
+          $pip->id = $id;
   
-          echo json_encode($cat);
+          echo json_encode($pip);
       } else {
-          echo json_encode("Navn skal udfyldes");
+          echo json_encode("username skal udfyldes");
       }
     }
