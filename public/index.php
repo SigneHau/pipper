@@ -17,14 +17,16 @@ $request = $_SERVER['REQUEST_METHOD'];
 // Create an if statement to check if this is a GET request
 
     // Her håndterer vi GET-request
-if ($request == "GET") {
-    
-  try {
     $conn = new PDO("mysql:host=$servername;dbname=pipper", $username, $password);
 
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+    if ($request == "GET" && $uri == "/pips") {
+    
+  try {
     $statement = $conn->query("SELECT * FROM pips");
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -32,10 +34,30 @@ if ($request == "GET") {
   } catch(PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
   }
-  
-     // else check if this is a POST request and write "You wrote a POST request" back
-} else if ($request == "POST") {
-    // Her håndterer vi POST-request
-     echo json_encode(["message" => "Du lavede en POST-request"]);
 }
-?>
+     // else check if this is a POST request and write "You wrote a POST request" back
+     else if ($request === 'POST' && $uri === '/pips') {
+      $input = (array) json_decode(file_get_contents('php://input'), true);
+  
+      $name = $input["name"];
+      $color = $input["color"];
+  
+      if ($name !== '') { // validering: overholde regler for at gemme korrekt data
+          $data = [
+              'name' => $name,
+              'color' => $color
+          ];
+          $sql = "INSERT INTO cats VALUES (default, :name, :color)";
+          $stmt= $conn->prepare($sql);
+          $stmt->execute($data);
+  
+  
+          $id = $conn->lastInsertId();
+          $cat = (object) $input;
+          $cat->id = $id;
+  
+          echo json_encode($cat);
+      } else {
+          echo json_encode("Navn skal udfyldes");
+      }
+    }
