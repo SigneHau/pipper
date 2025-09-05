@@ -70,33 +70,22 @@ document.getElementById("pip-form").addEventListener("submit", (event) => {
 
 // Der må maksimalt blive indtastet 255 karakterer i Pip-besked feltet, og der skal laves en tæller, så brugeren kan følge med i hvor mange de indtil videre har tastet.
 
-// //Hent HTML-elementer og gemmer i en variabel og definer maks-længde
-// const messageElement = document.getElementById('message');
-// const charCountElement = document.getElementById('charCount');
-// const maxLength = 250;
 
-// // Opdater tælleren med det samme
-// charCountElement.textContent = maxLength;
-
-// //Lyt efter input
-// messageElement.addEventListener('input', () => {
-
-//   //Beregn og opdater
-//   const remainingChars = maxLength - messageElement.value.length;
-//   charCountElement.textContent = remainingChars;
-// })
+const maxLength = 250;
 
 // frontend validering af besked længde
 document.getElementById("message").addEventListener("input", (e) => {
   const value = e.target.value;
   // console.log(value);
-  document.getElementById("charCount").innerText = value.length;
+
 
   // console.log(value.length);
-  if (value.length > 250) {
+  if (value.length > maxLength) {
     alert("Max 250 tegn")
     document.getElementById("message").value = value.substr(0, 250);
   }
+  document.getElementById("charCount").innerText = maxLength - value.length;
+
 })
 
 
