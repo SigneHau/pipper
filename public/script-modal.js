@@ -1,5 +1,5 @@
 // Vi import funktionen getdata fra api.js og laver en funktion så vi får vores beskeder ud
-import { getData } from "./api.js";
+import { getData, createPip } from "./api.js";
 
 const pips = await getData(); // her kalder jeg php serveren gennem funktionen fra api.js filen.
 console.log(pips);
@@ -81,6 +81,20 @@ messageElement.addEventListener('input', () => {
   const remainingChars = maxLength - messageElement.value.length;
    charCountElement.textContent = remainingChars;
 })
+
+// frontend validering af besked længde
+document.getElementById("message").addEventListener("input", (e) => {
+  const value = e.target.value;
+  // console.log(value);
+  document.getElementById("charCount").innerText = value.length;
+
+  // console.log(value.length);
+  if (value.length > 250) {
+      alert("Max 250 tegn")
+      document.getElementById("message").value = value.substr(0,250);
+  }  
+})
+
 
 
 function addPipToDOM(username, message) {

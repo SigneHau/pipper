@@ -45,7 +45,7 @@ $request = $_SERVER['REQUEST_METHOD'];
       if ($username !== '') { // validering: overholde regler for at gemme korrekt data
       
       // Backend validering PT.1 - max 250 tegn i message
-        if ($message <= 250) {
+        if ($length <= 250) {
 
           $data = [
               'username' => $username,
