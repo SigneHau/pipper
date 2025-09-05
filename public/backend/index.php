@@ -41,6 +41,8 @@ $request = $_SERVER['REQUEST_METHOD'];
       
       $username = $input["username"];
       $message = $input["message"];
+
+      $length = strlen($message);
   
       if ($username !== '') { // validering: overholde regler for at gemme korrekt data
       
