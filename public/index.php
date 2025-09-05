@@ -38,11 +38,15 @@ $request = $_SERVER['REQUEST_METHOD'];
      // else check if this is a POST request and write "You wrote a POST request" back
      else if ($request === 'POST' && $uri === '/pips') {
       $input = (array) json_decode(file_get_contents('php://input'), true);
+      
+      $username = $input["username"];
+      $message = $input["message"];
   
-      $name = $input["username"];
-      $color = $input["message"];
-  
-      if ($name !== '') { // validering: overholde regler for at gemme korrekt data
+      if ($username !== '') { // validering: overholde regler for at gemme korrekt data
+      
+      // Backend validering PT.1 - max 250 tegn i message
+        if ($message <= 250) {
+
           $data = [
               'username' => $username,
               'message' => $message
@@ -61,3 +65,9 @@ $request = $_SERVER['REQUEST_METHOD'];
           echo json_encode("username skal udfyldes");
       }
     }
+
+    // Backend validering hvis message er tom eller over 250 tegn
+      else {
+          echo json_encode("message skal udfyldes og må max være 250 tegn");
+      }
+  }
