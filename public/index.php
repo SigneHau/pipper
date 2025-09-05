@@ -38,26 +38,36 @@ $request = $_SERVER['REQUEST_METHOD'];
      // else check if this is a POST request and write "You wrote a POST request" back
      else if ($request === 'POST' && $uri === '/pips') {
       $input = (array) json_decode(file_get_contents('php://input'), true);
+      
+      $username = $input["username"];
+      $message = $input["message"];
   
-      $name = $input["name"];
-      $color = $input["color"];
-  
-      if ($name !== '') { // validering: overholde regler for at gemme korrekt data
+      if ($username !== '') { // validering: overholde regler for at gemme korrekt data
+      
+      // Backend validering PT.1 - max 250 tegn i message
+        if ($length <= 250) {
+
           $data = [
-              'name' => $name,
-              'color' => $color
+              'username' => $username,
+              'message' => $message
           ];
-          $sql = "INSERT INTO cats VALUES (default, :name, :color)";
+          $sql = "INSERT INTO pipper VALUES (default, :username, :message)";
           $stmt= $conn->prepare($sql);
           $stmt->execute($data);
   
   
           $id = $conn->lastInsertId();
-          $cat = (object) $input;
-          $cat->id = $id;
+          $pip = (object) $input;
+          $pip->id = $id;
   
-          echo json_encode($cat);
+          echo json_encode($pip);
       } else {
-          echo json_encode("Navn skal udfyldes");
+          echo json_encode("username skal udfyldes");
       }
     }
+
+    // Backend validering hvis message er tom eller over 250 tegn
+      else {
+          echo json_encode("message skal udfyldes og må max være 250 tegn");
+      }
+  }
