@@ -1,5 +1,5 @@
 export async function getData() {
-  const url = "http://127.0.0.1:8000/pips";
+  const url = "http://127.0.0.1:8000";
   try {
     const response = await fetch(url);
     // console.log(response);

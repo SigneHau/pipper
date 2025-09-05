@@ -71,7 +71,7 @@ git pull
 ```
 
 
-Når du skal hente oplysninger fra databasen.
+API
  
 
 Navigér til den korrekte mappe: Åbn din terminal og brug kommandoen cd til at navigere til den mappe, der indeholder din server-fil (f.eks. mappen public). 
@@ -80,7 +80,7 @@ Navigér til den korrekte mappe: Åbn din terminal og brug kommandoen cd til at 
 
 - Serveren kører nu. 
 
-- Tjek din api.js: Sørg for at URL'en i din fetch-funktion peger direkte på din server-fil (f.eks. http://127.0.0.1:8000/home.php). 
+- Tjek din api.js: Sørg for at URL'en i din fetch-funktion peger direkte på din server-fil 
 
 - Dobbelttjek dine headers: I din PHP-fil skal du sikre dig, at dine header()-kald er øverst i filen, og at der ikke er nogen mellemrum eller blanke linjer før <?php. 
 
