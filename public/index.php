@@ -1,7 +1,7 @@
 <?php
 require '../.env';
 
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin:*");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 header("Access-Control-Max-Age: 3600");
@@ -53,7 +53,7 @@ $request = $_SERVER['REQUEST_METHOD'];
               'username' => $username,
               'message' => $message
           ];
-          $sql = "INSERT INTO pipper VALUES (default, :username, :message)";
+          $sql = "INSERT INTO pips VALUES (default, :username, :message, DEFAULT)";
           $stmt= $conn->prepare($sql);
           $stmt->execute($data);
   
@@ -73,3 +73,5 @@ $request = $_SERVER['REQUEST_METHOD'];
           echo json_encode("message skal udfyldes og må max være 250 tegn");
       }
   }
+
+?>

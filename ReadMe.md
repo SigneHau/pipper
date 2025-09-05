@@ -76,7 +76,7 @@ API
 
 Navigér til den korrekte mappe: Åbn din terminal og brug kommandoen cd til at navigere til den mappe, der indeholder din server-fil (f.eks. mappen public). 
 
-- Start serveren: Kør kommandoen php -S 127.0.0.1:8000 i terminalen. 
+- Start serveren: Kør kommandoen php -S 127.0.0.1:8000 -t public i terminalen. 
 
 - Serveren kører nu. 
 
