@@ -50,6 +50,11 @@ git commit -m "beskrivelse af ændringen"
 git push
 ```
 
+hvis der kommer merge/stash fejl så brug dette:
+git reset --hard
+git pull
+"Dette gør at du sletter dine lokale ændringer - så der skal vi være sikre på at det der er lavet på den lokale maskine er ligegyldigt"
+
 ---
 
 ### 5. Når man vil hente andres ændringer
