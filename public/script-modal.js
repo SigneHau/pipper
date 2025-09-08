@@ -109,7 +109,7 @@ function addPipToDOM(username, message) {
 
 
   // indsætter vi templaten i html dokumentet (så brugeren kan se den)
-  document.getElementById("pips").appendChild(clon);
+  document.getElementById("pips").prepend(clon);
 }
 
 // Looper igennem alle pips og kalder funktionen addPipToDOM for hver pip
