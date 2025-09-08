@@ -27,7 +27,7 @@ $request = $_SERVER['REQUEST_METHOD'];
     if ($request == "GET" && $uri == "/pips") {
     
   try {
-    $statement = $conn->query("SELECT * FROM pips");
+    $statement = $conn->query("SELECT * FROM pips ORDER BY created_at DESC;");
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($result);
