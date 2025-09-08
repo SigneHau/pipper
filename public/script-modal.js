@@ -108,7 +108,7 @@ function addPipToDOM(username, message) {
   clon.querySelector(".avatar").src = "https://api.dicebear.com/9.x/adventurer/svg?seed=" + encodeURIComponent(username);
 
 
-  // indsætter vi templaten i html dokumentet (så brugeren kan se den)
+  // indsætter vi templaten i html dokumentet (så brugeren kan se den) "istedet for apendChild burger vi prepend for at beskeden skal være øverst"
   document.getElementById("pips").prepend(clon);
 }
 
