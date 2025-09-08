@@ -88,7 +88,7 @@ document.getElementById("message").addEventListener("input", (e) => {
 
 })
 
-
+// Funktionen herunder gør således at hver gang der oprettes et nyt pip bliver det gemt i DB - og sender den ind til hjemmesiden som starter ved denne konstant "const pips = await getData();" som ligger i toppen
 
 function addPipToDOM(username, message) {
   let pipHtml = document.getElementById("pip");
@@ -111,4 +111,9 @@ function addPipToDOM(username, message) {
   // indsætter vi templaten i html dokumentet (så brugeren kan se den)
   document.getElementById("pips").appendChild(clon);
 }
+
+// Looper igennem alle pips og kalder funktionen addPipToDOM for hver pip
+pips.forEach((pip) => {
+  addPipToDOM(pip.username, pip.message)
+})
 
