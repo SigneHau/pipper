@@ -53,7 +53,7 @@ $request = $_SERVER['REQUEST_METHOD'];
               'username' => $username,
               'message' => $message
           ];
-          $sql = "INSERT INTO pips VALUES (default, :username, :message, DEFAULT)";
+          $sql = "INSERT INTO pips VALUES (default, :username, :message, NOW())";
           $stmt= $conn->prepare($sql);
           $stmt->execute($data);
   
