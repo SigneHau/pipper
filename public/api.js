@@ -19,8 +19,8 @@ export async function createPip(username, message) {
   console.log(response);
 }
 
-export async function getData() {
-  const url = "http://127.0.0.1:8000/pips";
+export async function getData(offset) {
+  const url = "http://127.0.0.1:8000/pips" + offset;
   try {
     const response = await fetch(url);
     // console.log(response);
