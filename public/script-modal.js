@@ -131,5 +131,11 @@ document.getElementById("hentFlerePips").addEventListener("click", async () => {
 
   console.log(aktivePips);
 
+  // Loop igennem de nye pips og tilføj dem til DOM'en
+  aktivePips.data.forEach((pip) => {
+    addPipToDOM(pip.username, pip.message)
+  }) 
+
   offset = aktivePips.pagination.next_offset; // Opdater offset til næste sæt pips
 })
+
