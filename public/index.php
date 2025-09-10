@@ -26,6 +26,7 @@ $request = $_SERVER['REQUEST_METHOD'];
 
     if ($request == "GET" && $uri == "/pips") {
     
+  // bruger asc (ascending) for at vise ældste pip først - da vi bruger prepend i vores frontend, som gør at den ældste pip er øverst derved får vi skabt en revert funktion så det nyeste postet pip bliver vist øverst i vores frontend - selvom den bliver vist nederest i vores DB (SQL database)
   try {
     $statement = $conn->query("SELECT * FROM pips ORDER BY created_at ASC;");
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
