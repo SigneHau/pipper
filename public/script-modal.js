@@ -1,9 +1,13 @@
 // Vi import funktionen getdata fra api.js og laver en funktion så vi får vores beskeder ud
 import { getData, createPip } from "./api.js";
 
-const pips = await getData(0); // Hent de første 5. her kalder jeg php serveren gennem funktionen fra api.js filen.
-console.log(pips);
+const result = await getData(0); // Hent de første 3. her kalder jeg php serveren gennem funktionen fra api.js filen.
 
+const pips = result.data
+
+let offset = result.pagination.next_offset; // sætter offset til den næste værdi fra pagination objektet
+
+console.log(pips); // viser de 3 pips i konsollen
 
 // Erstatter alle <i data-feather="..."></i> med SVG-ikoner fra Feather Icons - altså vores billede af avertaren
 feather.replace();
@@ -108,8 +112,8 @@ function addPipToDOM(username, message) {
   clon.querySelector(".avatar").src = "https://api.dicebear.com/9.x/adventurer/svg?seed=" + encodeURIComponent(username);
 
 
-  // indsætter vi templaten i html dokumentet (så brugeren kan se den) - bruger prepend frem for appendChild fordi vi gerne vil have det nyeste pip øverst på vores frontend - så prepend + asc (ascending)
-  document.getElementById("pips").prepend(clon);
+  // indsætter vi templaten i html dokumentet (så brugeren kan se den)
+  document.getElementById("pips").appendChild(clon);
 }
 
 // Looper igennem alle pips og kalder funktionen addPipToDOM for hver pip
@@ -119,3 +123,13 @@ pips.forEach((pip) => {
 
 
 // Front-end til lazy loading/bæredygtighed - vi vil kun have vist de 5 seneste pips på vores hjemmeside med en knap til at hente flere pips - dette skal være sammenkoblet til vores backend og DB
+
+
+document.getElementById("hentFlerePips").addEventListener("click", async () => {
+  
+  const aktivePips = await getData(offset); // Hent de næste 3 pips
+
+  console.log(aktivePips);
+
+  offset = aktivePips.pagination.next_offset; // Opdater offset til næste sæt pips
+})

@@ -24,17 +24,46 @@ $request = $_SERVER['REQUEST_METHOD'];
 
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+
+// Backend til lazy loading/bæredygtighed - vi vil kun have vist de 3 seneste pips og så tilføje en knap i vores frontend, hvor vi kan hente flere pips ned - skal være sammenkoblet til vores JS og DB
+
     if ($request == "GET" && $uri == "/pips") {
     
-  // bruger asc (ascending) for at vise ældste pip først - da vi bruger prepend i vores frontend, som gør at den ældste pip er øverst derved får vi skabt en revert funktion så det nyeste postet pip bliver vist øverst i vores frontend - selvom den bliver vist nederest i vores DB (SQL database)
-  try {
-    $statement = $conn->query("SELECT * FROM pips ORDER BY created_at ASC;");
-    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-    echo json_encode($result);
-  } catch(PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-  }
+      try {
+        // Læs query-parametre: limit og offset
+        $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 10;
+        $offset = isset($_GET['offset']) ? (int) $_GET['offset'] : 0;
+      
+        // Rimelige grænser/validering
+        if ($limit < 1) $limit = 1;
+        if ($limit > 100) $limit = 100; // undgå alt for store svar
+        if ($offset < 0) $offset = 0;
+      
+        // (Valgfrit) total antal rækker til metadata
+        $total = (int) $conn->query("SELECT COUNT(*) FROM pips")->fetchColumn();
+      
+        // Hent pagineret data – bind som ints!
+        $stmt = $conn->prepare("SELECT * FROM pips ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      
+        // Returnér data + pagination-info
+        echo json_encode([
+            'data' => $rows,
+            'pagination' => [
+                'limit' => $limit,
+                'offset' => $offset,
+                'total' => $total,
+                'next_offset' => ($offset + $limit < $total) ? $offset + $limit : null,
+                'prev_offset' => ($offset - $limit >= 0) ? $offset - $limit : null
+            ]
+        ]);
+      } catch(PDOException $e) {
+        http_response_code(500);
+        echo json_encode(["error" => "Connection failed: " . $e->getMessage()]);
+      }
 }
      // else check if this is a POST request and write "You wrote a POST request" back
      else if ($request === 'POST' && $uri === '/pips') {
@@ -75,44 +104,6 @@ $request = $_SERVER['REQUEST_METHOD'];
       }
   }
 
-
-// Backend til lazy loading/bæredygtighed - vi vil kun have vist de 5 seneste pips og så tilføje en knap i vores frontend, hvor vi kan hente flere pips ned - skal være sammenkoblet til vores JS og DB
-
-try {
-  // Læs query-parametre: limit og offset
-  $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 10;
-  $offset = isset($_GET['offset']) ? (int) $_GET['offset'] : 0;
-
-  // Rimelige grænser/validering
-  if ($limit < 1) $limit = 1;
-  if ($limit > 100) $limit = 100; // undgå alt for store svar
-  if ($offset < 0) $offset = 0;
-
-  // (Valgfrit) total antal rækker til metadata
-  $total = (int) $conn->query("SELECT COUNT(*) FROM pips")->fetchColumn();
-
-  // Hent pagineret data – bind som ints!
-  $stmt = $conn->prepare("SELECT * FROM pips ORDER BY id_pip ASC LIMIT :limit OFFSET :offset");
-  $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-  $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-  $stmt->execute();
-  $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-  // Returnér data + pagination-info
-  echo json_encode([
-      'data' => $rows,
-      'pagination' => [
-          'limit' => $limit,
-          'offset' => $offset,
-          'total' => $total,
-          'next_offset' => ($offset + $limit < $total) ? $offset + $limit : null,
-          'prev_offset' => ($offset - $limit >= 0) ? $offset - $limit : null
-      ]
-  ]);
-} catch(PDOException $e) {
-  http_response_code(500);
-  echo json_encode(["error" => "Connection failed: " . $e->getMessage()]);
-}
 
 
 ?>
