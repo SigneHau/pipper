@@ -1,7 +1,7 @@
 // Vi import funktionen getdata fra api.js og laver en funktion så vi får vores beskeder ud
 import { getData, createPip } from "./api.js";
 
-const pips = await getData(); // Hent de første 5. her kalder jeg php serveren gennem funktionen fra api.js filen.
+const pips = await getData(0); // Hent de første 5. her kalder jeg php serveren gennem funktionen fra api.js filen.
 console.log(pips);
 
 
