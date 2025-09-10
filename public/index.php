@@ -74,7 +74,6 @@ $request = $_SERVER['REQUEST_METHOD'];
           echo json_encode("message skal udfyldes og må max være 250 tegn");
       }
   }
-
 // Backend til lazy loading/bæredygtighed - vi vil kun have vist de 5 seneste pips og så tilføje en knap i vores frontend, hvor vi kan hente flere pips ned - skal være sammenkoblet til vores JS og DB
 
 
