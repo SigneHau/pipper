@@ -1,142 +1,165 @@
-// Vi import funktionen getdata fra api.js og laver en funktion så vi får vores beskeder ud
+// Importerer funktionerne getData og createPip fra api.js
 import { getData, createPip } from "./api.js";
 
-const result = await getData(0); // Hent de første 3. her kalder jeg php serveren gennem funktionen fra api.js filen.
+// Henter de første pips fra serveren (offset 0 = de nyeste pips)
+const result = await getData(0);
 
-const pips = result.data
+// Gemmer arrayet med pips-data
+const pips = result.data;
 
-let offset = result.pagination.next_offset; // sætter offset til den næste værdi fra pagination objektet
+// Gemmer næste offset-værdi (bruges til at hente flere pips senere)
+let offset = result.pagination.next_offset;
 
-console.log(pips); // viser de 3 pips i konsollen
+// Udskriver de hentede pips i konsollen (til fejlsøgning)
+console.log(pips);
 
-// Erstatter alle <i data-feather="..."></i> med SVG-ikoner fra Feather Icons - altså vores billede af avertaren
+// Erstatter alle <i data-feather="..."></i> med SVG-ikoner fra Feather Icons
 feather.replace();
 
+//---------------------------------Modal-afsnit----------------------------------------
 
-// Get the modal
-var modal = document.getElementById("myModal");
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+// Henter modal-elementet
+const modal = document.getElementById("myModal");
 
-// When the user clicks on the button, open the modal
+// Henter knappen som åbner modal-vinduet
+const btn = document.getElementById("myBtn");
+
+// Henter <span>-elementet (X) der lukker modal-vinduet
+const span = document.getElementsByClassName("close")[0];
+
+
+// Når brugeren klikker på knappen → vis modal-vinduet
 btn.onclick = function () {
-  modal.style.display = "flex"; // viser og centrerer
+  modal.style.display = "flex"; // viser modal og centrerer indholdet
 }
 
-// When the user clicks on <span> (x), close the modal
+// Når brugeren klikker på <span> (X) → luk modal-vinduet
 span.onclick = function () {
-  modal.style.display = "none"; // skjuler igen
+  modal.style.display = "none"; // skjuler modal igen
 }
 
-// When the user clicks anywhere outside of the modal, close it
+// Når brugeren klikker udenfor modal-indholdet → luk modal-vinduet
 window.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
+  if (event.target === modal) {
+    modal.style.display = "none"; // skjuler modal
   }
 }
 
 
-//Fubktion til når pip-beskeden bliver submittet
+//----------------------------Pipformular-afsnit----------------------------------------
 
+// Lytter efter når pip-formularen bliver sendt
 document.getElementById("pip-form").addEventListener("submit", (event) => {
-  event.preventDefault() // stopper standard opførslen, hvor browseren reloader siden
+  // Stopper standard-handlingen (som ellers ville reloade siden)
+  event.preventDefault();
 
-  const username = document.getElementById("username").value
-  const message = document.getElementById("message").value
+  // Henter værdier fra inputfelterne
+  const username = document.getElementById("username").value;
+  const message = document.getElementById("message").value;
 
-  //console.log(username, message);
-
+  // Tjekker om der mangler brugernavn
   if (username === "") {
-    alert("Der mangler et navn")
+    alert("Du skal indtaste et navn");
   }
+  // Tjekker om der mangler besked
   else if (message === "") {
-    alert("Der mangler din besked")
+    alert("Du skal indtaste en besked");
   }
-
+  // Hvis begge felter er udfyldt
   else {
+    // Sender pip’et til backend/database
     createPip(username, message);
+
+    // Tilføjer pip’et til DOM’en (så brugeren ser det med det samme)
+    addPipToDOM(username, message);
+
+    // Lukker modal-vinduet
+    modal.style.display = "none";
+
+    // Rydder inputfelterne efter indsendelse
+    document.getElementById("username").value = "";
+    document.getElementById("message").value = "";
   }
-
-  addPipToDOM(username, message)
-
-
-  //console.log(event.target["username"].value);
-  
-  // Luk modal
-  modal.style.display = "none";
-
-  // Ryd formular felterne
-  document.getElementById("username").value = "";
-  document.getElementById("message").value = "";
-
-})
-
-// Der må maksimalt blive indtastet 255 karakterer i Pip-besked feltet, og der skal laves en tæller, så brugeren kan følge med i hvor mange de indtil videre har tastet.
+});
 
 
+
+//----------------------------Tæller og længdebegrønsning-afsnit----------------------------------------
+
+// Der må maksimalt blive indtastet 250 karakterer i Pip-besked feltet, og der skal laves en tæller, så brugeren kan følge med i hvor mange de indtil videre har tastet.
+
+// Maksimalt antal tegn i beskedfeltet
 const maxLength = 250;
 
-// frontend validering af besked længde
+// Lytter efter hver gang brugeren skriver i beskedfeltet
 document.getElementById("message").addEventListener("input", (e) => {
-  const value = e.target.value;
-  // console.log(value);
+  const value = e.target.value; // det nuværende indhold i feltet
 
-
-  // console.log(value.length);
+  // Hvis der bliver skrevet flere tegn end maxLength
   if (value.length > maxLength) {
-    alert("Max 250 tegn")
-    document.getElementById("message").value = value.substr(0, 250);
+    alert(`Maksimalt ${maxLength} tegn er tilladt`);
+    // Afkorter værdien til maxLength (forhindrer overskridelse)
+    document.getElementById("message").value = value.substr(0, maxLength);
   }
-  document.getElementById("charCount").innerText = maxLength - value.length;
 
-})
+  // Opdaterer tælleren så brugeren kan se hvor mange tegn der er tilbage
+  const remaining = maxLength - document.getElementById("message").value.length;
+  document.getElementById("charCount").innerText = remaining;
+});
 
-// Funktionen herunder gør således at hver gang der oprettes et nyt pip bliver det gemt i DB - og sender den ind til hjemmesiden som starter ved denne konstant "const pips = await getData();" som ligger i toppen
 
+
+//----------------------------------Tilføj pip til DOM (viser pip på siden)-----------------------------------------
+
+// Funktion som opretter og indsætter et nyt pip i DOM’en
 function addPipToDOM(username, message) {
-  let pipHtml = document.getElementById("pip");
-  //console.log(username, message);
+  // Henter <template>-elementet med pip-layout
+  let pipTemplate = document.getElementById("pip");
 
-  // opretter en kopi fordi jeg skal have en templates indhold per pip
-  let clon = pipHtml.content.cloneNode(true);
-  // console.log(clon);
+  // Opretter en kopi af template-indholdet (nyt pip)
+  let clon = pipTemplate.content.cloneNode(true);
 
-  // console.log(clon.querySelector(".username"));
-
-  // Sætter jeg pips værdier ind i klonen af templaten
+  // Indsætter brugernavn og besked i den nye pip
   clon.querySelector(".username").innerText = username;
   clon.querySelector(".message").innerText = message;
 
-  // Sæt en standard Dicebear avatar
-  clon.querySelector(".avatar").src = "https://api.dicebear.com/9.x/adventurer/svg?seed=" + encodeURIComponent(username);
+  // Genererer en standard-avatar fra Dicebear baseret på brugernavnet
+  clon.querySelector(".avatar").src =
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=" + encodeURIComponent(username);
 
-
-  // indsætter vi templaten i html dokumentet (så brugeren kan se den)
-  document.getElementById("pips").appendChild(clon);
+  // Tilføjer det nye pip øverst i <div id="pips"> (så det vises først)
+  document.getElementById("pips").prepend(clon);
 }
 
-// Looper igennem alle pips og kalder funktionen addPipToDOM for hver pip
+
+// Looper igennem alle hentede pips fra serveren
+// og indsætter dem i DOM’en ét for ét
 pips.forEach((pip) => {
-  addPipToDOM(pip.username, pip.message)
-})
+  // Kalder funktionen der tilføjer hvert pip til DOM’en
+  addPipToDOM(pip.username, pip.message);
+});
 
 
+
+//-------------- hent flere pips (lazy loding)
 // Front-end til lazy loading/bæredygtighed - vi vil kun have vist de 5 seneste pips på vores hjemmeside med en knap til at hente flere pips - dette skal være sammenkoblet til vores backend og DB
 
 
+// Lytter efter klik på knappen "Hent flere pips"
 document.getElementById("hentFlerePips").addEventListener("click", async () => {
-  
-  const aktivePips = await getData(offset); // Hent de næste 3 pips
 
+  // Henter de næste pips fra serveren med nuværende offset
+  const aktivePips = await getData(offset);
+
+  // Udskriv de hentede pips i konsollen til fejlsøgning
   console.log(aktivePips);
 
-  // Loop igennem de nye pips og tilføj dem til DOM'en
-  aktivePips.data.forEach((pip) => {
-    addPipToDOM(pip.username, pip.message)
-  }) 
+  // Opdater offset til næste sæt pips (bruges næste gang knappen klikkes)
+  offset = aktivePips.pagination.next_offset;
 
-  offset = aktivePips.pagination.next_offset; // Opdater offset til næste sæt pips
-})
+  // Tilføjer de nye pips til DOM’en (øverst med prepend)
+  aktivePips.data.forEach((pip) => {
+    addPipToDOM(pip.username, pip.message);
+  });
+});
 
