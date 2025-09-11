@@ -111,24 +111,27 @@ document.getElementById("message").addEventListener("input", (e) => {
 
 //----------------------------------Tilføj pip til DOM (viser pip på siden)-----------------------------------------
 
-// Funktion som opretter og indsætter et nyt pip i DOM’en
+// Funktionen tager brugerens data, kloner en skjult HTML-template og indsætter den som et færdigt pip i feedet.
+
 function addPipToDOM(username, message) {
-  // Henter <template>-elementet med pip-layout
+  // Finder det skjulte <template> i HTML med pip-layoutet.
   let pipTemplate = document.getElementById("pip");
 
-  // Opretter en kopi af template-indholdet (nyt pip)
+  // Laver en fuld kopi af pip’et (true = kopier også børn og indhold – altså brugernavn - message og avatar).
   let clon = pipTemplate.content.cloneNode(true);
 
-  // Indsætter brugernavn og besked i den nye pip
+  // Indsætter brugernavn og besked i den nye pip - altså det brugeren taster ind.
   clon.querySelector(".username").innerText = username;
   clon.querySelector(".message").innerText = message;
 
   // Genererer en standard-avatar fra Dicebear baseret på brugernavnet
+  //Sætter billedets src til Dicebear. encodeURIComponent sikrer korrekt URL
+  //Dicebear bruger brugernavn som "seed" giver samme avatar til samme brugernavn. 
   clon.querySelector(".avatar").src =
-    "https://api.dicebear.com/9.x/adventurer/svg?seed=" + encodeURIComponent(username);
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=" + encodeURIComponent(username); 
 
   // Tilføjer det nye pip øverst i <div id="pips"> (så det vises først)
-  document.getElementById("pips").prepend(clon);
+  document.getElementById("pips").prepend(clon); 
 }
 
 
