@@ -1,97 +1,109 @@
+
+/* --------------------------------------------------
+   GLOBAL STYLING
+-------------------------------------------------- */
 body {
-    background-color: black;
-    box-sizing: border-box;
+    background-color: black;    /* sort baggrund for hele siden */
+    box-sizing: border-box;        /* inkluderer padding/border i elementets bredde */
 }
 
 h1 {
-    color: white;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;               /* hvid tekst */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;  /* dekorativ/fed font til overskrifter */
 }
 
 p {
-    color: white;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: white;               /* hvid tekst */
+    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;                  /* standard sans-serif til brødtekst */
     font-size: 1.4rem;
 }
 
+/* --------------------------------------------------
+   FLEXBOX CONTAINER
+-------------------------------------------------- */
+
 .container {
     background-color: black;
-    display: flex;
-    justify-content: center;/* sørger for at centrerede flex-items */
-    gap: 40px;
-    margin: 40px auto;/* auto margin centrerer containeren på siden */
-    max-width: 1400px;/* giver kontrol over maks bredde */
+    display: flex;              /* flex layout for 3 kolonner */
+    justify-content: center;    /* centrerer hele containeren horisontalt */
+    gap: 40px;                  /* afstand mellem kolonnerne */
+    margin: 40px auto;          /* centrerer containeren på siden */
+    max-width: 1400px;                 /* maks bredde, så den ikke fylder hele skærmen */
     
 }
 
-/* Style til sidemenu*/
+/* --------------------------------------------------
+   SIDEMENU
+-------------------------------------------------- */
 .sidemenu {
-    width: 400px;
-    height: 900px;
+    width: 400px;               /* fast bredde for kolonnen */
+    height: 900px;              /* fast højde */
     display: flex;
-    flex-direction: column;/* centrerer alle børn horisontalt */
-    gap: 10px;/* afstand mellem elementer */
+    flex-direction: column;     /* lægger børn lodret */
+    gap: 10px;                  /* afstand mellem elementer */
 }
 
 .img-logo {
-    max-width: 120px;/* eller hvor lille du vil have det */
-    height: auto; /* sørger for at højden følger med */
+    max-width: 120px;           /* logo skaleres til max bredde */
+    height: auto;               /* højden følger automatisk */
 }
 
 .icon {
     color: white;
-    margin: 20px;
+    margin: 20px;               /* mellemrum rundt om ikoner */
 }
 
 .icon-home,
 .icon-profil,
 .icon-search,
 .icon-notifications {
-    display: flex;
-    align-items: center;/* centrerer ikon og tekst lodret */
-    gap: 8px; /* afstand mellem ikon og tekst */
+    display: flex;              /* ikon + tekst i én række */
+    align-items: center;        /* vertikal centering */
+    gap: 8px;                   /* afstand mellem ikon og tekst */
 }
 
+/* --------------------------------------------------
+   KNAPPER
+-------------------------------------------------- */
 #myBtn, #hentFlerePips {
     background-color: #a56d39;
     width: 150px;
     height: 40px;
-    border-radius: 10px;
+    border-radius: 10px;                /* afrundede hjørner */
     display: block;
-    margin: auto;/* centrerer horisontalt */
+    margin: auto;                       /* centrerer knappen horisontalt */
     color: white;
     font-size: large;
-    border: 0.1px white solid;
+    border: 0.1px white solid;        /* tynd kant for kontrast */
 }
 
-#myBtn:hover {
+#myBtn:hover, #hentFlerePips:hover {
     background-color: white;
-    color: black;
-}
-#hentFlerePips:hover {
-    background-color: white;
-    color: black;
+    color: black;                     /* hover-effekt */
 }
 
 
-/* The Modal (background) */
+
+/* --------------------------------------------------
+   MODAL
+-------------------------------------------------- */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
+    display: none;                      /* skjult som standard */
+    position: fixed;                    /* overlay ovenpå siden */
+    z-index: 1;                         /* liggende over alt andet */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(2px);
+    background-color: rgba(0, 0, 0, 0.3); /* mørk gennemsigtig baggrund */
+    backdrop-filter: blur(2px);             /* sløring af baggrund */
     
-    justify-content: center;   /* centrerer vandret */
-    align-items: flex-start;   /* top i stedet for midten */
-    padding-top: 40px;         /* lidt luft fra toppen */
+    justify-content: center;             /* centrerer horisontalt */
+    align-items: flex-start;            /* starter fra toppen */
+    padding-top: 40px;                  /* luft fra toppen */
 }
 
-/* Modal Content/Box */
+
 .modal-content {
     background-color: #0e0d0d;
     padding: 20px;
@@ -101,9 +113,10 @@ p {
     border: 1px solid white;
 }
 
+/* Formular i modal */
 .modal-content form{
     display: flex; 
-    flex-direction: column; 
+    flex-direction: column;             /* inputfelter under hinanden */
     color: white;
     height: 300px;
 }
@@ -118,14 +131,14 @@ p {
     width: 97%;
     padding: 10px;
     font-size: 1rem;
-    resize: vertical;  /* brugeren kan ændre højden */
+    resize: vertical;                   /* brugeren kan ændre højden */
     font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 
 
 
-/* Knappen inden i Modal */
+/* Knappen inde i modal */
 #btnInsideModal{
     background-color: #a56d39;
     width: 100px;
@@ -136,11 +149,11 @@ p {
     font-size: large;
     border: 0.1px white solid;
     display: block;
-    margin: auto;  /* centrerer horisontalt */
+    margin: auto;                       /* centrerer horisontalt */
 }
 
 
-/* The Close Button */
+/* Close-knap (X) i modal */
 .close {
     color: #aaa;
     float: right;
@@ -155,11 +168,13 @@ p {
     cursor: pointer;
 }
 
-/* Style til pips*/
+/* --------------------------------------------------
+   PIPS
+-------------------------------------------------- */
 .pip-container {
-    display: flex;
-    flex-direction: row;/* billede + tekst ved siden af hinanden */
-    align-items: flex-start;/* start linje, så teksten starter øverst */
+    display: flex;                  /* billede + tekst side om side */
+    flex-direction: row;
+    align-items: flex-start;        /* start øverst */
     height: 200px;
    
     border-radius: 30px;
@@ -170,19 +185,21 @@ p {
 
 .pip-text {
     display: flex;
-    flex-direction: column;/* navn øverst, så besked, så dato */
+    flex-direction: column;         /* navn øverst, så besked, så dato */
     justify-content: flex-start;
 }
 
 .avatar {
     height: 100px;
     width: 100px;
-    border-radius: 50%;/* rund avatar */
+    border-radius: 50%;             /* rund avatar */
     
-    object-fit: cover; /* sikrer at billedet ikke strækkes */
+    object-fit: cover;              /* billedet fylder containeren uden at strække */
 }
 
-/* Style til chatfeed*/
+/* --------------------------------------------------
+   CHATFEED
+-------------------------------------------------- */
 .chatfeed {
     background-color: rgb(0, 0, 0);
     width: 800px;
@@ -194,11 +211,13 @@ p {
 
 
 
-
+/* --------------------------------------------------
+   NEWSFEED
+-------------------------------------------------- */
 .newsfeed {
     padding: 20px;
     width: 400px;
-    /*visibility: hidden; skjuler indholdet, men beholder pladsen */
+
 }
 
 
@@ -206,6 +225,6 @@ p {
 
 @media only screen and (max-width: 600px) {
     .newsfeed {
-        display: none;
+        display: none;              /* skjuler newsfeed på små skærme */
     }
 }
